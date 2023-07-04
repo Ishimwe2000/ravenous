@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-    <h1>ravenous</h1>
+    <h1>Hungerly</h1>
     <SearchBar searchYelp={searchYelp}/>
     <BusinessList businessList={businesses}/>
     </div>

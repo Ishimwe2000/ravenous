@@ -1,21 +1,19 @@
 import React from 'react';
 import './BusinessList.css';
 import Business from '../Business/Business.js';
+
+
 // need to revise on how to import and reference  modules
-class BusinessList extends React.Component {
-    render(){
+const BusinessList = ({ businessList }) => {
         return (
             <div className="BusinessList">
-                    <Business />
-                    <Business />
-                    <Business />
-                    <Business />
-                    <Business />
-                    <Business />
-                    {/* I get it!! this is the part for rendering the hard-coded Business objects okay gurl okay!! */}
-                
-</div>
-        )
-    }
-}
+                {businessList.map((business) => {
+                return (
+                        <Business business={business} key={business.id}/>
+                        )})}              
+           </div>
+        );
+    
+};
 export default BusinessList;
+// this takes the businesses array passed as a prop from App and sends an individual Business object to Business component to display

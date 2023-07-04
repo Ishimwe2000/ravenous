@@ -1,48 +1,88 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/jsx-no-comment-textnodes */
-import React from 'react';
-import './SearchBar.css';
-// it doesn't feel like I am doing a project idk why ..
+// eslint-disable-next-line no-unused-vars
+import React, {useState} from 'react';
+import  './SearchBar.css';
+
+
 const sortByOptions = {
     'Best Match' : 'best_match',
     'Highest Rated': 'rating',
     'Most Reviewed': 'review_count'
 }
-// this reminds me of the hackathon so much, more like too muc
-// finding the keys of the API call was easier than I imagined. mxm
-class SearchBar extends React.Component {
-    renderSortByOptions() {
-        
-    return Object.keys(sortByOptions).map(sortByOption => {
-        let sortByOptionValue = sortByOptions[sortByOption];
-        return <li key={sortByOptionValue}>{sortByOption}</li>;
-        // we haven't used this yet so I don't know how it works but it will eventually make sense
-        // I had missed something here I understand that
 
+function SearchBar ({searchYelp}) {
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [location, setLocation] = useState("");
+  const [sortingOption, setSortingOption] = useState("best_match"); 
+  // now I get why these hooks have to be in the Searchbar component, maybe I need to remove the class notations..?
+  // yes class components do not work with hooks I get that now
+  // I am happy to be back tbh
+  const getSortByClass = (sortByOption) => {
+    if (sortingOption === sortByOption) {
+      return "active";
+    }
+      return "";  
+  };
+  // this is to render an active style if the sort option is equal to the sortByOption from the object 
+  const handleSortByChange = (sortByOption) => {
+    setSortingOption(sortByOption);
+  }
+  // these are the event handlers that I still do not understand well and that is okay for now
+  // the only way to growth is step by step and humility, nothing else
+  const handleTermChange = (event) => {
+    setSearchTerm(event.target.value);
+    setSearchTerm('');
+  }
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  }
+  const handleSearch = (event) => {
+    event.preventDefault();
+    searchYelp(searchTerm, location,sortingOption)
+
+  }
+  
+     const renderSortByOptions = () =>  {  
+        return Object.keys(sortByOptions).map(sortByOption => {
+        let sortByOptionValue = sortByOptions[sortByOption];
+        return (
+          <li 
+            className={getSortByClass(sortByOptionValue)}
+            key={sortByOptionValue}
+            onClick={() => {
+              handleSortByChange(sortByOptionValue)
+            }}>
+              {sortByOption}
+              </li>
+        // list items need keys in React I get that now
+        );
     });
    } 
-//    since when do we write methods/functions like this... I need more practice and reading. 
-// I am not that bad but could definitely do better. I know I can. I just need to keep going. On and On we go. 
-// I am a little confused but hope that it will all make sense eventually
-// no this is a weird method for sure, need to sit down and understand it
-render(){
-    return (<div class="SearchBar">
-    <div className="SearchBar-sort-options">
+    return (
+    <div className="SearchBar">
+    <div className="SearchBarSortOptions">
       <ul>
-       {this.renderSortByOptions()} 
-       {/* hope this above function works but if it doesn't that's okay too */}
+       { renderSortByOptions()}
       </ul>
     </div>
-    <div className="SearchBar-fields">
-      <input placeholder="Search Businesses" />
-      <input placeholder="Where?" />
-    </div>
-    <div className="SearchBar-submit">
-      <a>Let's Go</a> 
-      {/* might change this above element into a button tbh, just waiting it out in case there are some changes to be done ...  */}
-    </div>
+    <form onSubmit={handleSearch}> 
+      <div className="SearchBarFields">
+        <input placeholder="Search Businesses"  onChange={handleTermChange}/>
+        <input placeholder="Where?"  onChange={handleLocationChange}/>
+      </div>
+      <div className="SearchBarSubmit">
+        <button type="submit">Let's Go</button>
+      </div>
+
+    </form>
+    
   </div>)
-}
+
 
 } 
 export default SearchBar;
+
+// so it does look like I had to refactor this component from class component to function component okay good to know
+// I feel disoriented. I want to see the final code and go from there
+// how last summer this time was so different. as in wow times really do change who could have known hey
+// and next week this time will be even more different wow time is really fickle but also the only constant, just like change

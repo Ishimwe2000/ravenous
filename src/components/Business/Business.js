@@ -1,19 +1,8 @@
 import React from 'react';
 import  './Business.css'; 
-// this is a different way of importing for me tbh
-const business = {
-    imageSrc: 'https://content.codecademy.com/programs/react/ravenous/pizza.jpg',
-    name: 'MarginOtto Pizzeria',
-    address: '1010 Paddington Way',
-    city: 'Flavortown',
-    state: 'NY',
-    zipCode: '10101',
-    category: 'Italian',
-    rating: 4.5,
-    reviewCount: 90
-}
-class Business extends React.Component {
-    render() {
+
+function Business ({business}) {
+    
         return( <div className="Business">
         <div className="image-container">
           <img src={business.imageSrc} alt=''/>
@@ -23,18 +12,19 @@ class Business extends React.Component {
           <div className="Business-address">
             <p>{business.address}</p>
             <p>{business.city}</p>
-            <p>{business.state}</p>
-            <p>{business.zipCode}</p>
+            <p>{`${business.state}`}</p>
+            <p>{`${business.zipCode}`}</p>
           </div>
           <div className="Business-reviews">
-            <h3>{business.category}</h3>
-            <h3 className="rating">{business.rating}</h3>
-            <p>{business.reviewCount}</p>
+            <h3>{business.category.toUpperCase()}</h3>
+            <h3 className="rating">{`${business.rating} stars`}</h3>
+            <p>{`${business.reviewCount} reviews`}</p>
           </div>
         </div>
       </div>)
-    }
 
 }
 export default Business;
 // okay I remember doing this part at least 
+// business takes a business object as the prop that it gets from business list component
+// I definitely want to customize this project further. I am so happy that I can debug better
